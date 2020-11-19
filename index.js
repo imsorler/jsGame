@@ -1,19 +1,41 @@
 const $start = document.querySelector('#start')
 const $game = document.querySelector('#game')
+const $time = document.querySelector('#time')
 
 let score = 0
+let isGameStarted = false
 
 $start.addEventListener('click', startGame)
 $game.addEventListener('click', handleBoxClick)
 
 function startGame() {
+  isGameStarted = true
   $game.style.backgroundColor = '#fff'
   $start.classList.add('hide')
+
+  const interval = setInterval(function() {
+    let time = parseFloat($time.textContent)
+
+    if (time <= 0) {
+      clearInterval(interval)
+      endGame()
+    } else {
+      $time.textContent = ( time - 0.1).toFixed(1)
+    }
+  }, 100)
 
   renderBox()
 }
 
+function endGame() {
+  isGameStarted = false
+}
+
 function handleBoxClick(event) {
+  if (!isGameStarted) {
+    return
+  }
+  
   if (event.target.dataset.box) {
     score++
     renderBox()
@@ -28,7 +50,6 @@ function renderBox() {
   let gameSize = $game.getBoundingClientRect()
   let maxTop = gameSize.height - boxSize
   let maxLeft = gameSize.width - boxSize
-  console.log(gameSize)
   
   box.style.height = box.style.width = `${boxSize}px`
   box.style.position = 'absolute'
