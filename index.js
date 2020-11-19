@@ -2,6 +2,7 @@ const $start = document.querySelector('#start')
 const $game = document.querySelector('#game')
 const $time = document.querySelector('#time')
 
+let colors = ['#8B008B', '#BC8F8F', '#A52A2A', '#00FF00', '#008080', '#FF6347	', '#4682B4']
 let score = 0
 let isGameStarted = false
 let $result = document.querySelector('#result')
@@ -87,10 +88,11 @@ function renderBox() {
 
   let maxTop = gameSize.height - boxSize
   let maxLeft = gameSize.width - boxSize
+  let randomColorIndex = getRandom(0, colors.length - 1)
   
   box.style.height = box.style.width = `${boxSize}px`
   box.style.position = 'absolute'
-  box.style.backgroundColor = '#000'
+  box.style.backgroundColor = colors[randomColorIndex]
   box.style.top = getRandom(0, maxTop) + 'px'
   box.style.left = getRandom(0, maxLeft) + 'px'
   box.style.cursor = 'pointer'
