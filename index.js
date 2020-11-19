@@ -4,11 +4,19 @@ const $time = document.querySelector('#time')
 
 let score = 0
 let isGameStarted = false
+let $result = document.querySelector('#result')
+let $timeHeader = document.querySelector('#time-header')
+let $resultHeader = document.querySelector('#result-header')
 
 $start.addEventListener('click', startGame)
 $game.addEventListener('click', handleBoxClick)
 
 function startGame() {
+  score = 0
+  setGameTime()
+  
+  $timeHeader.classList.remove('hide')
+  $resultHeader.classList.add('hide')
   isGameStarted = true
   $game.style.backgroundColor = '#fff'
   $start.classList.add('hide')
@@ -27,8 +35,24 @@ function startGame() {
   renderBox()
 }
 
+function setGameScore() {
+  $result.textContent = score.toString()
+}
+
+function setGameTime() {
+  let time = 5
+  $time.textContent = time.toFixed(1)
+}
+
 function endGame() {
   isGameStarted = false
+  setGameScore()
+
+  $start.classList.remove('hide')
+  $game.innerHTML = ''
+  $game.style.backgroundColor = '#DDA0DD'
+  $timeHeader.classList.add('hide')
+  $resultHeader.classList.remove('hide')
 }
 
 function handleBoxClick(event) {
@@ -43,11 +67,12 @@ function handleBoxClick(event) {
 }
 
 function renderBox() {
-  $game.innerHTML = ' '
+  $game.innerHTML = ''
   const box =  document.createElement('div')
 
   let boxSize = getRandom(30, 100)
   let gameSize = $game.getBoundingClientRect()
+
   let maxTop = gameSize.height - boxSize
   let maxLeft = gameSize.width - boxSize
   
