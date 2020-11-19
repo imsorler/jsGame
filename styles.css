@@ -16,6 +16,10 @@ body {
   background: linear-gradient(#483D8B, #800080);
 }
 
+h1 {
+  color: #483D8B;
+}
+
 .app {
   background: #fff;
   padding: 20px;
